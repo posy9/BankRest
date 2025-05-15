@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CardSpecificationBuilder {
+public class CardSpecificationBuilder implements SpecificationBuilder<Card, CardFilterDto> {
 
     public Specification<Card> build(CardFilterDto filterDto) {
         return withStatusId(filterDto.getStatus_id())

@@ -6,7 +6,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum EntityNameRegistry {
-    CARD("Card");
+    CARD("Card"),
+    USER("User");
 
     private final String entityName;
 }

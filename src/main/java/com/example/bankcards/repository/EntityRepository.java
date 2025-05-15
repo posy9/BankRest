@@ -1,9 +1,10 @@
 package com.example.bankcards.repository;
 
-import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.DataEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.NoRepositoryBean;
 
-public interface CardRepository extends EntityRepository<Card, Long> {
+@NoRepositoryBean
+public interface EntityRepository<T extends DataEntity, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
 }

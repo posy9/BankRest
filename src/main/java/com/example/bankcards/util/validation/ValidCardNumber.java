@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidCardNumber {
-    String message() default "Некорректный номер карты";
+    String message() default "Invalid card number";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -8,6 +8,9 @@ public class CardNumberValidator implements ConstraintValidator<ValidCardNumber,
     @Override
     public  boolean isValid(String number, ConstraintValidatorContext constraintValidatorContext) {
         // Удаляем пробелы и проверяем формат
+        if(number == null) {
+            return false;
+        }
         number = number.replaceAll("\\s", "");
 
         // Проверяем, что точно 16 цифр

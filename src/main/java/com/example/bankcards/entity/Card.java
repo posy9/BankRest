@@ -3,12 +3,13 @@ package com.example.bankcards.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "cards")
 @Data
-public class Card {
+public class Card implements DataEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

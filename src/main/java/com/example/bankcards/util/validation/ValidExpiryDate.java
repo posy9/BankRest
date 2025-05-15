@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidExpiryDate {
-    String message() default "Некорректный срок действия карты (MM/YY) или карта уже просрочена";
+    String message() default "Invalid expiry date or card is already expired";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
