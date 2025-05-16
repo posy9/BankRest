@@ -28,14 +28,14 @@ public abstract class AbstractController<T extends DataEntity, R extends ReadDto
     private final SpecificationBuilder<T, F> entitySpecificationBuilder;
 
     @GetMapping
-    Page<R> getAllEntities(@ModelAttribute F filterDto, @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable) {
+    public Page<R> getAllEntities(@ModelAttribute F filterDto, @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable) {
         Specification<T> entitySpecification = entitySpecificationBuilder.build(filterDto);
         Page<T> entities = entityService.findMultiple(entitySpecification, pageable);
         return entities.map(entity -> modelMapper.map(entity, readDtoClass));
     }
 
     @GetMapping(value = "/{id}")
-    R getEntityById(@PathVariable long id) {
+    public R getEntityById(@PathVariable long id) {
         T entity = entityService.findById(id);
         return modelMapper.map(entity, readDtoClass);
     }
@@ -50,14 +50,14 @@ public abstract class AbstractController<T extends DataEntity, R extends ReadDto
     }
 
     @PutMapping(value = "/{id}")
-    R updateEntity(@PathVariable long id, @Valid @RequestBody U entityUpdateDto) {
+    public R updateEntity(@PathVariable long id, @Valid @RequestBody U entityUpdateDto) {
         entityService.updateEntity(id, modelMapper.map(entityUpdateDto, entityClass));
         T updatedEntity = entityService.findById(id);
         return modelMapper.map(updatedEntity, readDtoClass);
     }
 
     @DeleteMapping(value = "/{id}")
-    ResponseEntity<Void> deleteEntity(@PathVariable long id) {
+    public ResponseEntity<Void> deleteEntity(@PathVariable long id) {
         entityService.deleteEntity(id);
         return ResponseEntity.noContent().build();
     }

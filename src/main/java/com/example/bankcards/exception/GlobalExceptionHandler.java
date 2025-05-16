@@ -54,5 +54,16 @@ public class GlobalExceptionHandler {
         return Map.of(MESSAGE_FIELD_NAME, "Impossible action");
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleIllegalStateException(IllegalStateException ex) {
+        return Map.of(MESSAGE_FIELD_NAME, ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return Map.of(MESSAGE_FIELD_NAME, ex.getMessage());
+    }
 }
 
