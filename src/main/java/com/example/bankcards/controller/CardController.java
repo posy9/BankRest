@@ -21,8 +21,8 @@ public class CardController extends AbstractController<Card, CardReadDto, CardCr
 
     @PatchMapping("/{id}")
     CardReadDto changeCardStatus(@PathVariable long id, @Valid @RequestBody CardPatchDto cardPatchDto) {
-        Card card = cardService.changeCardStatus(id,modelMapper.map(cardPatchDto,Card.class).getStatus());
+        Card card = cardService.changeCardStatus(id, modelMapper.map(cardPatchDto, Card.class).getStatus());
         Card changedCard = cardService.findById(id);
-        return modelMapper.map(changedCard,CardReadDto.class);
+        return modelMapper.map(changedCard, CardReadDto.class);
     }
 }

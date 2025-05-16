@@ -1,4 +1,4 @@
-package com.example.bankcards.util.masking;
+package com.example.bankcards.util.converter;
 
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;

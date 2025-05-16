@@ -6,9 +6,9 @@ import jakarta.validation.ConstraintValidatorContext;
 public class CardNumberValidator implements ConstraintValidator<ValidCardNumber, String> {
 
     @Override
-    public  boolean isValid(String number, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(String number, ConstraintValidatorContext constraintValidatorContext) {
         // Удаляем пробелы и проверяем формат
-        if(number == null) {
+        if (number == null) {
             return false;
         }
         number = number.replaceAll("\\s", "");

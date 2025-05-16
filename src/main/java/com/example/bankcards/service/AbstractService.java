@@ -5,12 +5,10 @@ import com.example.bankcards.repository.EntityRepository;
 import com.example.bankcards.util.registry.EntityNameRegistry;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.lang.reflect.Field;
 import java.util.Optional;
 
 import static com.example.bankcards.util.registry.ErrorMessagesRegistry.ENTITIES_NOT_FOUND;

@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class CardPatchDto {
 
-   @Valid
-   private StatusReadDto status;
+    @Valid
+    private StatusReadDto status;
 }

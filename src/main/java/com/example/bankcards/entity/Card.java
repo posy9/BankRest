@@ -3,8 +3,8 @@ package com.example.bankcards.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "cards")
@@ -19,14 +19,14 @@ public class Card implements DataEntity {
     private String cardNumber;
 
     @Column(name = "expiryDate", length = 5, nullable = false)
-    private String expiryDate;
+    private LocalDate expiryDate;
 
     @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private  User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "status_id")

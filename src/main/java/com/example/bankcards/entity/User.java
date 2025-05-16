@@ -1,10 +1,7 @@
 package com.example.bankcards.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-
-import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +19,6 @@ public class User implements DataEntity {
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 }

@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 public class CardFilterDto implements FilterDto {
 
-     private Long user_id;
+    private Long user_id;
 
-     private Long status_id;
+    private Long status_id;
 
-     private String expiryDate;
+    private String expiryDate;
 
-     private String cardNumber;
+    private String cardNumber;
 }

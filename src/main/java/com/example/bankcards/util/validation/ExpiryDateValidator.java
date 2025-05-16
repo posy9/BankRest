@@ -2,14 +2,18 @@ package com.example.bankcards.util.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+@Component
+@RequiredArgsConstructor
 public class ExpiryDateValidator implements ConstraintValidator<ValidExpiryDate, String> {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MM/yy");
+    private final DateTimeFormatter formatter;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
@@ -18,7 +22,7 @@ public class ExpiryDateValidator implements ConstraintValidator<ValidExpiryDate,
         }
 
         try {
-            YearMonth expiry = YearMonth.parse(value, FORMATTER);
+            YearMonth expiry = YearMonth.parse(value, formatter);
             YearMonth now = YearMonth.now();
 
             return !expiry.isBefore(now); // карта не просрочена
