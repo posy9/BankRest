@@ -16,6 +16,6 @@ public class UserCreateDto implements ReadDto, CreateDto {
     @NotBlank(message = "should not be empty")
     private String password;
 
-    @NotNull(message = "should not be null")
+    @NotNull(message = "should not be empty")
     private RoleReadDto role;
 }

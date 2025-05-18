@@ -15,6 +15,6 @@ public class UserUpdateDto implements UpdateDto {
     @NotBlank(message = "should not be empty")
     private String password;
 
-    @NotNull(message = "should not be null")
+    @NotNull(message = "should not be empty")
     private RoleReadDto role;
 }

@@ -27,3 +27,7 @@ logging:
 
 server:
   port: 8080
+
+jwt:
+  signing:
+    key: ${JWT_SECRET}

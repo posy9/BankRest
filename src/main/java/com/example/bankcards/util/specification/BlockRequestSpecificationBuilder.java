@@ -3,7 +3,9 @@ package com.example.bankcards.util.specification;
 import com.example.bankcards.dto.requestdtos.BlockRequestFilterDto;
 import com.example.bankcards.entity.BlockRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BlockRequestSpecificationBuilder implements SpecificationBuilder<BlockRequest, BlockRequestFilterDto> {
 
     @Override

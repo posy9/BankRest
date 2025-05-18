@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class UserReadDto implements ReadDto {
 
-    @NotNull(message = "should not be null")
+    @NotNull(message = "should not be empty")
     private Long id;
 
     private String username;

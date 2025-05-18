@@ -4,8 +4,10 @@ import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.Status;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.StatusRepository;
+import com.example.bankcards.security.service.SecurityService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -14,24 +16,34 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 
 import static com.example.bankcards.util.registry.EntityNameRegistry.CARD;
-import static com.example.bankcards.util.registry.ErrorMessagesRegistry.ENTITY_NOT_FOUND;
+import static com.example.bankcards.util.registry.ErrorMessagesRegistry.*;
 
 @Service
 @Transactional
 public class CardService extends AbstractService<Card> {
 
+    private static final long ACTIVE_STATUS_ID = 2L;
+
     private final StatusRepository statusRepository;
     private final CardRepository cardRepository;
+    private final SecurityService securityService;
 
-    public CardService(CardRepository repository, StatusRepository statusRepository) {
+    public CardService(CardRepository repository, StatusRepository statusRepository, SecurityService securityService) {
         super(repository, CARD);
         this.statusRepository = statusRepository;
         this.cardRepository = repository;
+        this.securityService = securityService;
+    }
+
+    @Override
+    @PostAuthorize("hasRole('ADMIN') or returnObject.user.id eq principal.id")
+    public Card findById(long id) {
+        return super.findById(id);
     }
 
     @Override
     public Card createEntity(Card card) {
-        Status status = statusRepository.getReferenceById(2L);
+        Status status = statusRepository.getReferenceById(ACTIVE_STATUS_ID);
         card.setStatus(status);
         entityRepository.save(card);
         return card;
@@ -62,20 +74,26 @@ public class CardService extends AbstractService<Card> {
     }
 
     private boolean checkTransferPossibility(Card fromCard, Card toCard, BigDecimal amount) {
-        if (!fromCard.getStatus().getId().equals(2L)) {
-            throw new IllegalStateException("The sender card is blocked or expired");
+        Long currentUserId = securityService.getUserId();
+        if (!(fromCard.getUser().getId().equals(currentUserId)
+                && toCard.getUser().getId().equals(currentUserId))) {
+            throw new IllegalStateException(CARD_BELONG.getMessage());
+        }
+
+        if (!fromCard.getStatus().getId().equals(ACTIVE_STATUS_ID)) {
+            throw new IllegalStateException(SENDER_CARD.getMessage());
         }
 
         if (!fromCard.getStatus().getId().equals(toCard.getStatus().getId())) {
-            throw new IllegalStateException("Сan not transfer to the same card");
+            throw new IllegalStateException(SAME_CARD.getMessage());
         }
 
-        if (!toCard.getStatus().getId().equals(2L)) {
-            throw new IllegalStateException("The recipient card is blocked or expired");
+        if (!toCard.getStatus().getId().equals(ACTIVE_STATUS_ID)) {
+            throw new IllegalStateException(RECIPIENT_CARD.getMessage());
         }
 
         if (fromCard.getBalance().compareTo(amount) < 0) {
-            throw new IllegalArgumentException("Not enough funds");
+            throw new IllegalArgumentException(FUNDS.getMessage());
         }
         return true;
     }

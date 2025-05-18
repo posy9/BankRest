@@ -5,6 +5,7 @@ import com.example.bankcards.dto.userdtos.UserReadDto;
 import com.example.bankcards.util.validation.ValidCardNumber;
 import com.example.bankcards.util.validation.ValidExpiryDate;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class CardCreateDto implements CreateDto {
     private String expiryDate;
 
     @PositiveOrZero
+    @NotNull(message = "should not be empty")
     private BigDecimal balance;
 
     @Valid

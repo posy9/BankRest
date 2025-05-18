@@ -9,7 +9,9 @@ import com.example.bankcards.service.BlockRequestService;
 import com.example.bankcards.util.specification.BlockRequestSpecificationBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping("/api/block")
 public class BlockRequestController extends AbstractController<BlockRequest,
         BlockRequestReadDto, BlockRequestCreateDto, BlockRequestUpdateDto, BlockRequestFilterDto> {
