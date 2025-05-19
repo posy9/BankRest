@@ -13,7 +13,7 @@ public class BlockRequest implements DataEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "card_id", nullable = false)
+    @JoinColumn(name = "card_id", unique = true, nullable = false)
     private Card card;
 
     @Column(name = "description", length = 1000)

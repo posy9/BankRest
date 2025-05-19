@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 public class CardSpecificationBuilder implements SpecificationBuilder<Card, CardFilterDto> {
 
     public Specification<Card> build(CardFilterDto filterDto) {
-        return withStatusId(filterDto.getStatus_id())
+        return withStatusId(filterDto.getStatusId())
                 .and(withExpiryDate(filterDto.getExpiryDate())
-                        .and(withUserId(filterDto.getUser_id()))
+                        .and(withUserId(filterDto.getUserId()))
                         .and(withNumberLike(filterDto.getCardNumber())));
     }
 

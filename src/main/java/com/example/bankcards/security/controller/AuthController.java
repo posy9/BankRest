@@ -33,7 +33,6 @@ public class AuthController {
         );
 
         UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
-
         String accessToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 

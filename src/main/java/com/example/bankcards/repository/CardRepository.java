@@ -8,10 +8,12 @@ public interface CardRepository extends EntityRepository<Card, Long> {
 
     @Modifying
     @Query("""
-                UPDATE Card c
-                SET c.status.id = 3
-                WHERE c.expiryDate < CURRENT_DATE
-                AND c.status.id != 3
+            UPDATE Card c
+            SET c.status.id = (
+                SELECT s.id FROM Status s WHERE s.name = 'BLOCKED'
+            )
+            WHERE c.expiryDate < CURRENT_DATE
+            AND c.status.name != 'BLOCKED'
             """)
     int updateExpiredCards();
 

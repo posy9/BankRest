@@ -53,7 +53,7 @@ public abstract class AbstractService<T extends DataEntity> {
         }
     }
 
-    public Page<T> findMultiple(Specification<T> specification, Pageable pageable) {
+    public Page<T> findPage(Specification<T> specification, Pageable pageable) {
         Page<T> foundEntities = entityRepository.findAll(specification, pageable);
         if (!foundEntities.isEmpty()) {
             return foundEntities;

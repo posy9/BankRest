@@ -10,7 +10,7 @@ public class BlockRequestSpecificationBuilder implements SpecificationBuilder<Bl
 
     @Override
     public Specification<BlockRequest> build(BlockRequestFilterDto filterDto) {
-        return withCardId(filterDto.getCard_id());
+        return withCardId(filterDto.getCardId());
     }
 
     private Specification<BlockRequest> withCardId(Long cardId) {

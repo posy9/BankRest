@@ -34,9 +34,8 @@ public class CardController extends AbstractController<Card, CardReadDto, CardCr
     public Page<CardReadDto> getAllEntities(@ModelAttribute CardFilterDto filterDto,
                                             @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable) {
         if (securityService.hasRole("ROLE_USER")) {
-            filterDto.setUser_id(securityService.getUserId());
+            filterDto.setUserId(securityService.getUserId());
         }
-        ;
         return super.getAllEntities(filterDto, pageable);
     }
 

@@ -30,7 +30,7 @@ public abstract class AbstractController<T extends DataEntity, R extends ReadDto
     @GetMapping
     public Page<R> getAllEntities(@ModelAttribute F filterDto, @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable) {
         Specification<T> entitySpecification = entitySpecificationBuilder.build(filterDto);
-        Page<T> entities = entityService.findMultiple(entitySpecification, pageable);
+        Page<T> entities = entityService.findPage(entitySpecification, pageable);
         return entities.map(entity -> modelMapper.map(entity, readDtoClass));
     }
 

@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class BlockRequestFilterDto implements FilterDto {
 
-    private Long card_id;
+    private Long cardId;
 }

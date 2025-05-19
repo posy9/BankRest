@@ -10,7 +10,7 @@ public class UserSpecificationBuilder implements SpecificationBuilder<User, User
 
     @Override
     public Specification<User> build(UserFilterDto filterDto) {
-        return withRoleId(filterDto.getRole_id())
+        return withRoleId(filterDto.getRoleId())
                 .and(withNameLike(filterDto.getUsername()));
     }
 

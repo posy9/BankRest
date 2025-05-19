@@ -8,5 +8,5 @@ public class UserFilterDto implements FilterDto {
 
     private String username;
 
-    private Long role_id;
+    private Long roleId;
 }
