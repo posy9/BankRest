@@ -61,7 +61,7 @@ public class CardService extends AbstractService<Card> {
         return cardRepository.updateExpiredCards();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.REPEATABLE_READ)
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void doTransfer(Long fromCardId, Long toCardId, BigDecimal amount) {
         Card fromCard = cardRepository.findById(fromCardId).orElseThrow(() -> new EntityNotFoundException(String.format(ENTITY_NOT_FOUND.getMessage(), CARD.getEntityName(), fromCardId)));
         Card toCard = cardRepository.findById(toCardId).orElseThrow(() -> new EntityNotFoundException(String.format(ENTITY_NOT_FOUND.getMessage(), CARD.getEntityName(), toCardId)));
