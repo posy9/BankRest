@@ -35,4 +35,11 @@ public class UserService extends AbstractService<User> implements UserDetailsSer
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return super.createEntity(user);
     }
+
+    @Override
+    public User updateEntity(long id, User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return super.updateEntity(id, user);
+    }
+
 }

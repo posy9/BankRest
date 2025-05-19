@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -26,13 +28,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+
                         .requestMatchers(HttpMethod.GET, "/api/cards").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/cards/*").hasAnyRole("USER", "ADMIN")
+
                         .requestMatchers("/api/cards/*/transfer").hasRole("USER")
                         .requestMatchers("/api/cards").hasRole("ADMIN")
-                        .requestMatchers("/api/users").hasRole("ADMIN")
+
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+
                         .requestMatchers(HttpMethod.POST, "/api/block").hasRole("USER")
-                        .requestMatchers("/api/block").hasRole("ADMIN")
+                        .requestMatchers("/api/block/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

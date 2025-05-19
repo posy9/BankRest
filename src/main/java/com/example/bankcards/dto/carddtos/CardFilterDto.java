@@ -10,7 +10,5 @@ public class CardFilterDto implements FilterDto {
 
     private Long statusId;
 
-    private String expiryDate;
-
     private String cardNumber;
 }

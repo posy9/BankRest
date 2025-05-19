@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2-insert-statuses
+      author: Daniil
+      changes:
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: name
+                  value: BLOCKED
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: name
+                  value: ACTIVE
+        - insert:
+            tableName: statuses
+            columns:
+              - column:
+                  name: name
+                  value: EXPIRED
+
+  - changeSet:
+      id: 3-insert-roles
+      author: Daniil
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: ROLE_ADMIN
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: ROLE_USER
+
+  - changeSet:
+      id: 4-insert-admin-user
+      author: Daniil
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: admin
+              - column:
+                  name: pass
+                  value: '$2a$10$GUwCqpQD41cp7RByy./FjO9mXj4n5SZIjnT8J1NVDrEO1cqXRVRXS'
+              - column:
+                  name: role_id
+                  valueNumeric: 1

@@ -10,9 +10,10 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import static com.example.bankcards.util.registry.ErrorMessagesRegistry.*;
 
 @RestController
 @RequestMapping("/api/cards")
@@ -30,13 +31,30 @@ public class CardController extends AbstractController<Card, CardReadDto, CardCr
     }
 
     @Override
+    @PostMapping
+    public CardReadDto createEntity(@Valid @RequestBody CardCreateDto cardCreateDto) {
+        if (!(securityService.isAdmin(cardCreateDto.getUser().getId()))) {
+            return super.createEntity(cardCreateDto);
+        }
+        throw new IllegalStateException(CARD_HOLDING.getMessage());
+    }
+
+    @Override
     @GetMapping
-    public Page<CardReadDto> getAllEntities(@ModelAttribute CardFilterDto filterDto,
-                                            @PageableDefault(size = Integer.MAX_VALUE) Pageable pageable) {
+    public Page<CardReadDto> getAllEntities(@ModelAttribute CardFilterDto filterDto, Pageable pageable) {
         if (securityService.hasRole("ROLE_USER")) {
             filterDto.setUserId(securityService.getUserId());
         }
         return super.getAllEntities(filterDto, pageable);
+    }
+
+    @Override
+    @GetMapping(value = "/{id}")
+    public CardReadDto getEntityById(@PathVariable long id) {
+        if (securityService.hasRole("ROLE_ADMIN") || securityService.checkCardBelonging(id)) {
+            return super.getEntityById(id);
+        }
+        throw new IllegalStateException(CARD_BELONG.getMessage());
     }
 
     @PatchMapping("/{id}")
@@ -49,6 +67,11 @@ public class CardController extends AbstractController<Card, CardReadDto, CardCr
     @PostMapping("/{fromCardId}/transfer")
     @ResponseStatus(HttpStatus.OK)
     public void makeTransfer(@PathVariable long fromCardId, @Valid @RequestBody TransferDto transferDto) {
-        cardService.doTransfer(fromCardId, transferDto.getToCardId(), transferDto.getAmount());
+        if (securityService.checkCardBelonging(fromCardId)
+                && securityService.checkCardBelonging(transferDto.getToCardId())) {
+            cardService.doTransfer(fromCardId, transferDto.getToCardId(), transferDto.getAmount());
+        } else {
+            throw new IllegalStateException(CARDS_BELONG.getMessage());
+        }
     }
 }

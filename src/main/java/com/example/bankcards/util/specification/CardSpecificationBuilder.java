@@ -10,9 +10,8 @@ public class CardSpecificationBuilder implements SpecificationBuilder<Card, Card
 
     public Specification<Card> build(CardFilterDto filterDto) {
         return withStatusId(filterDto.getStatusId())
-                .and(withExpiryDate(filterDto.getExpiryDate())
-                        .and(withUserId(filterDto.getUserId()))
-                        .and(withNumberLike(filterDto.getCardNumber())));
+                .and(withUserId(filterDto.getUserId()))
+                .and(withNumberLike(filterDto.getCardNumber()));
     }
 
     private Specification<Card> withStatusId(Long statusId) {
@@ -20,10 +19,6 @@ public class CardSpecificationBuilder implements SpecificationBuilder<Card, Card
                 ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("status").get("id"), statusId));
     }
 
-    private Specification<Card> withExpiryDate(String expiryDate) {
-        return ((root, query, criteriaBuilder) -> expiryDate == null
-                ? criteriaBuilder.conjunction() : criteriaBuilder.equal(root.get("type").get("id"), expiryDate));
-    }
 
     private Specification<Card> withUserId(Long userId) {
         return ((root, query, criteriaBuilder) -> userId == null

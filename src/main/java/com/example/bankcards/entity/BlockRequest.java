@@ -12,7 +12,7 @@ public class BlockRequest implements DataEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "card_id", unique = true, nullable = false)
     private Card card;
 
