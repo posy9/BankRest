@@ -32,4 +32,4 @@ server:
 
 jwt:
   signing:
-    key: ${JWT_SECRET}
+    key: "my-very-secure-key-with-at-least-32-chars-1234567890"

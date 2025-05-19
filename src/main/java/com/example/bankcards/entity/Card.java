@@ -15,10 +15,10 @@ public class Card implements DataEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cardNumber", length = 16, nullable = false, unique = true)
+    @Column(name = "card_number", length = 16, nullable = false, unique = true)
     private String cardNumber;
 
-    @Column(name = "expiryDate", length = 5, nullable = false)
+    @Column(name = "expiry_Date", length = 5, nullable = false)
     private LocalDate expiryDate;
 
     @Column(name = "balance", nullable = false)
