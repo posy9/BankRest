@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  db:
+  bankCardsDb:
     image: postgres:17
     environment:
       POSTGRES_USER: root
@@ -15,9 +15,9 @@ services:
   app:
     build: .
     depends_on:
-      - db
+      - bankCardsDb
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/bankcardsdb"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://bankCardsDb:5432/bankcardsdb"
     ports:
       - "8080:8080"
 

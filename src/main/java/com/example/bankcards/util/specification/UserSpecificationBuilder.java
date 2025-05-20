@@ -24,7 +24,7 @@ public class UserSpecificationBuilder implements SpecificationBuilder<User, User
                 (username == null || username.isEmpty())
                         ? criteriaBuilder.conjunction()
                         : criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("username")),
+                        root.get("username"),
                         "%" + username + "%"
                 );
     }

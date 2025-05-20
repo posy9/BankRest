@@ -14,8 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.bankcards.util.registry.ErrorMessagesRegistry.ADMIN_DELETING;
-import static com.example.bankcards.util.registry.ErrorMessagesRegistry.ADMIN_UPDATING;
+import static com.example.bankcards.util.registry.ErrorMessagesRegistry.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -37,6 +36,9 @@ public class UserController extends AbstractController<User, UserReadDto, UserCr
         }
         if (!securityService.isAdmin(id)) {
             return super.updateEntity(id, userUpdateDto);
+        }
+        if (!securityService.checkUpdatePossibility(id, userUpdateDto)) {
+            throw new IllegalStateException(CARD_HOLDER.getMessage());
         }
         throw new IllegalStateException(ADMIN_UPDATING.getMessage());
     }

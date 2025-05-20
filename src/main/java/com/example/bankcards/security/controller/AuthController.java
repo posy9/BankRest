@@ -4,6 +4,7 @@ import com.example.bankcards.security.dto.AuthRequestDto;
 import com.example.bankcards.security.dto.AuthResponseDto;
 import com.example.bankcards.security.dto.RefreshRequestDto;
 import com.example.bankcards.security.service.JwtService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequestDto request) {
+    public ResponseEntity<?> login(@RequestBody @Valid AuthRequestDto request) {
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
@@ -40,7 +41,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(@RequestBody RefreshRequestDto request) {
+    public ResponseEntity<?> refresh(@RequestBody @Valid RefreshRequestDto request) {
         String username = jwtService.extractUsername(request.getRefreshToken());
         UserDetails user = userDetailsService.loadUserByUsername(username);
 

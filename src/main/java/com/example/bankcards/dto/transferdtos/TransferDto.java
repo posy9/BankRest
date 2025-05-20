@@ -13,7 +13,7 @@ public class TransferDto {
     @NotNull(message = "should not be empty")
     private Long toCardId;
 
-    @Positive
+    @Positive(message = "should be more than 0")
     @NotNull(message = "should not be empty")
     private BigDecimal amount;
 }

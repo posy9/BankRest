@@ -30,6 +30,9 @@ logging:
 server:
   port: 8080
 
+springdoc:
+  swagger-ui:
+    url: /openapi.yaml
 jwt:
   signing:
     key: "my-very-secure-key-with-at-least-32-chars-1234567890"

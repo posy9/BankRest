@@ -1,5 +1,6 @@
 package com.example.bankcards.exception;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,12 @@ public class GlobalExceptionHandler {
             errors.put(field, message);
         });
         return errors;
+    }
+
+    @ExceptionHandler(JsonParseException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleEntityNotFound(JsonParseException ex) {
+        return Map.of(MESSAGE_FIELD_NAME, "invalid token");
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

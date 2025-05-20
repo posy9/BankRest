@@ -30,7 +30,7 @@ public class CardSpecificationBuilder implements SpecificationBuilder<Card, Card
                 (cardNumber == null || cardNumber.isEmpty())
                         ? criteriaBuilder.conjunction()
                         : criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("cardNumber")),
+                        root.get("cardNumber"),
                         "%" + cardNumber + "%"
                 );
     }

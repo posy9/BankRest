@@ -1,5 +1,6 @@
 package com.example.bankcards.security.service;
 
+import com.example.bankcards.dto.userdtos.UserUpdateDto;
 import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.User;
 import com.example.bankcards.repository.CardRepository;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SecurityService {
 
+    private static final Long ADMIN_ROLE_ID = 1L;
     private final CardRepository cardRepository;
     private final UserRepository userRepository;
 
@@ -39,11 +41,15 @@ public class SecurityService {
 
     public boolean isAdmin(Long id) {
         Optional<User> user = userRepository.findById(id);
-        if (user.isPresent() && user.get().getRole().getName().equals("ROLE_ADMIN")) {
-            return true;
-        }
-        ;
-        return false;
+        return user.isPresent() && user.get().getRole().getName().equals("ROLE_ADMIN");
     }
+
+    public boolean checkUpdatePossibility(Long id, UserUpdateDto userUpdateDto) {
+        boolean isAdminRole = ADMIN_ROLE_ID.equals(userUpdateDto.getRole().getId());
+        boolean hasCard = cardRepository.findFirstByUser_id(id).isPresent();
+
+        return !(isAdminRole && hasCard);
+    }
+
 
 }

@@ -4,6 +4,8 @@ import com.example.bankcards.entity.Card;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface CardRepository extends EntityRepository<Card, Long> {
 
     @Modifying
@@ -16,5 +18,7 @@ public interface CardRepository extends EntityRepository<Card, Long> {
             AND c.status.name != 'BLOCKED'
             """)
     int updateExpiredCards();
+
+    Optional<Card> findFirstByUser_id(Long user_id);
 
 }

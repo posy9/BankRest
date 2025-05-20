@@ -20,6 +20,7 @@ public enum ErrorMessagesRegistry {
     FUNDS("Not enough funds"),
     ADMIN_DELETING("Unable to delete administrator"),
     ADMIN_UPDATING("Administrator can't update other administrators"),
+    CARD_HOLDER("Card holder can not be an administrator"),
     ;
 
     private final String message;
