@@ -17,7 +17,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -166,9 +167,8 @@ class CardServiceTest {
 
         when(cardRepository.findById(1L)).thenReturn(Optional.of(card));
 
-        assertThrows(IllegalStateException.class, ()->cardService.doTransfer(1L, 1L, transferAmount));
+        assertThrows(IllegalStateException.class, () -> cardService.doTransfer(1L, 1L, transferAmount));
     }
-
 
 
     @Test
