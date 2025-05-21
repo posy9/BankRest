@@ -4,7 +4,6 @@ import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.Status;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.StatusRepository;
-import com.example.bankcards.security.service.SecurityService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class CardService extends AbstractService<Card> {
     private final StatusRepository statusRepository;
     private final CardRepository cardRepository;
 
-    public CardService(CardRepository repository, StatusRepository statusRepository, SecurityService securityService) {
+    public CardService(CardRepository repository, StatusRepository statusRepository) {
         super(repository, CARD);
         this.statusRepository = statusRepository;
         this.cardRepository = repository;
