@@ -55,3 +55,15 @@ databaseChangeLog:
               - column:
                   name: role_id
                   valueNumeric: 1
+        - insert:
+             tableName: users
+             columns:
+               - column:
+                   name: username
+                   value: user
+               - column:
+                   name: pass
+                   value: '$2a$10$GUwCqpQD41cp7RByy./FjO9mXj4n5SZIjnT8J1NVDrEO1cqXRVRXS'
+               - column:
+                   name: role_id
+                   valueNumeric: 2

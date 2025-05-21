@@ -14,6 +14,10 @@ info:
     ## created administrator:
     ### username: admin
     ### password: 123456
+      ## created user:
+    ### username: user
+    ### password: 123456
+
 
 servers:
   - url: http://localhost:8080
