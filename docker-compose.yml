@@ -13,7 +13,7 @@ services:
   bank_cards_app:
     build: .
     depends_on:
-      - bankCardsDb
+      - bank_cards_db
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://bank_cards_db:5432/bankcardsdb"
     ports:
