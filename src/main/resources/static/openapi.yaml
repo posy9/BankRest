@@ -11,6 +11,9 @@ info:
      ### id: 1 name: BLOCKED
     ### id: 2 name: ACTIVE
      ### id: 3 name: EXPIRED
+    ## created administrator:
+    ### username: admin
+    ### password: 123456
 
 servers:
   - url: http://localhost:8080
