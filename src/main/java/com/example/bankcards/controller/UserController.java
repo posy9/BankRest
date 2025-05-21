@@ -31,14 +31,14 @@ public class UserController extends AbstractController<User, UserReadDto, UserCr
     @PutMapping(value = "/{id}")
     public UserReadDto updateEntity(@PathVariable long id, @Valid @RequestBody UserUpdateDto userUpdateDto) {
         Long currentUserId = securityService.getUserId();
+        if (!securityService.checkUpdatePossibility(id, userUpdateDto)) {
+            throw new IllegalStateException(CARD_HOLDER.getMessage());
+        }
         if (currentUserId.equals(id)) {
             return super.updateEntity(id, userUpdateDto);
         }
         if (!securityService.isAdmin(id)) {
             return super.updateEntity(id, userUpdateDto);
-        }
-        if (!securityService.checkUpdatePossibility(id, userUpdateDto)) {
-            throw new IllegalStateException(CARD_HOLDER.getMessage());
         }
         throw new IllegalStateException(ADMIN_UPDATING.getMessage());
     }

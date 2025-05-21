@@ -630,7 +630,10 @@ components:
           type: string
           minLength: 1
         role:
-          $ref: "#/components/schemas/RoleRead"
+          type: object
+          properties:
+            id:
+              type: integer
       required:
         - password
         - role
@@ -657,9 +660,15 @@ components:
         balance:
           type: number
         user:
-          $ref: "#/components/schemas/UserRead"
+          type: object
+          properties:
+            id:
+              type: integer
         status:
-          $ref: "#/components/schemas/StatusRead"
+          type: object
+          properties:
+            id:
+              type: integer
     StatusRead:
       type: object
       properties:
