@@ -25,7 +25,7 @@ spring:
 
 logging:
   level:
-    org.springframework: DEBUG
+    org.springframework: TRACE
 
 server:
   port: 8080
@@ -35,4 +35,4 @@ springdoc:
     url: /openapi.yaml
 jwt:
   signing:
-    key: "my-very-secure-key-with-at-least-32-chars-1234567890"
+    key: "aL9xvZ1kT7qMwE5YcBnRpHsF3gLdUJXeQvCtAi82sNhObKrz"
