@@ -2,16 +2,12 @@ package com.example.bankcards.controller;
 
 import com.example.bankcards.dto.userdtos.UserUpdateDto;
 import com.example.bankcards.security.service.SecurityService;
-import com.example.bankcards.service.UserService;
-import com.example.bankcards.util.specification.UserSpecificationBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -20,16 +16,7 @@ import static org.mockito.Mockito.when;
 public class UserControllerTest {
 
     @Mock
-    private UserService userService;
-
-    @Mock
     private SecurityService securityService;
-
-    @Mock
-    private UserSpecificationBuilder userSpecificationBuilder;
-
-    @Spy
-    private ModelMapper modelMapper = new ModelMapper();
 
     @InjectMocks
     private UserController userController;
