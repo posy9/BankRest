@@ -40,6 +40,17 @@ public class CardController extends AbstractController<Card, CardReadDto, CardCr
     }
 
     @Override
+    @PutMapping("/{id}")
+    public CardReadDto updateEntity(@PathVariable long id, @Valid @RequestBody CardUpdateDto cardUpdateDto) {
+        if (!(securityService.isAdmin(cardUpdateDto.getUser().getId()))) {
+            return super.updateEntity(id, cardUpdateDto);
+        }
+        throw new IllegalStateException(CARD_HOLDING.getMessage());
+
+    }
+
+
+    @Override
     @GetMapping
     public Page<CardReadDto> getAllEntities(@ModelAttribute CardFilterDto filterDto, Pageable pageable) {
         if (securityService.hasRole("ROLE_USER")) {

@@ -141,7 +141,7 @@ paths:
         403:
           description: Request not from administrator
         400:
-          description: Wrong response body or card is already exist
+          description: Wrong response body, card is already exist or trying to assign card for administrator
         200:
           description: Updated card is successfully returned
           content:
@@ -443,7 +443,7 @@ paths:
         required: true
       responses:
         400:
-          description: Wrong request body, trying to create card for administrator card is already exists
+          description: Wrong request body, trying to create card for administrator or card is already exists
         201:
           description: Created
           content:

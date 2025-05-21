@@ -1,9 +1,6 @@
 package com.example.bankcards.controller;
 
-import com.example.bankcards.dto.carddtos.CardCreateDto;
-import com.example.bankcards.dto.carddtos.CardFilterDto;
-import com.example.bankcards.dto.carddtos.CardPatchDto;
-import com.example.bankcards.dto.carddtos.CardReadDto;
+import com.example.bankcards.dto.carddtos.*;
 import com.example.bankcards.dto.statusdtos.StatusReadDto;
 import com.example.bankcards.dto.transferdtos.TransferDto;
 import com.example.bankcards.dto.userdtos.UserReadDto;
@@ -58,6 +55,8 @@ class CardControllerTest {
     private CardCreateDto cardCreateDto;
     private CardFilterDto cardFilterDto;
     private CardPatchDto cardPatchDto;
+    private CardUpdateDto cardUpdateDto;
+
 
     @BeforeEach
     void setUp() {
@@ -67,6 +66,9 @@ class CardControllerTest {
         Status testStatus = new Status();
         testStatus.setId(2L);
         testStatus.setName("Active");
+
+        UserReadDto userReadDto = new UserReadDto();
+        userReadDto.setId(1L);
 
         testCard = new Card();
         testCard.setId(1L);
@@ -80,9 +82,12 @@ class CardControllerTest {
         cardReadDto.setId(1L);
         cardReadDto.setBalance(new BigDecimal("1000.00"));
 
+        cardUpdateDto = new CardUpdateDto();
+        cardUpdateDto.setUser(userReadDto);
+        cardUpdateDto.setCardNumber("4111111111111111");
+
         cardCreateDto = new CardCreateDto();
-        UserReadDto userReadDto = new UserReadDto();
-        userReadDto.setId(1L);
+
         cardCreateDto.setUser(userReadDto);
 
         cardFilterDto = new CardFilterDto();
@@ -95,7 +100,7 @@ class CardControllerTest {
 
 
     @Test
-    void createEntity_ShouldCallSuperCreateEntity_WhenNotAdmin() {
+    void createEntity_ShouldReturnCreatedCardDto_WhenNotAdmin() {
 
         when(securityService.isAdmin(1L)).thenReturn(false);
         when(modelMapper.map(any(CardCreateDto.class), eq(Card.class))).thenReturn(testCard);
@@ -108,8 +113,45 @@ class CardControllerTest {
     }
 
     @Test
+    void createEntity_ShouldThrowException_WhenAdmin() {
+
+        when(securityService.isAdmin(1L)).thenReturn(true);
+
+        assertThrows(IllegalStateException.class, () ->
+                cardController.createEntity(cardCreateDto)
+        );
+    }
+
+    @Test
+    void updateEntity_ShouldReturnUpdatedCardDto_WhenNotAdmin() {
+        when(securityService.isAdmin(1L)).thenReturn(false);
+        when(modelMapper.map(cardUpdateDto, Card.class)).thenReturn(testCard);
+        when(cardService.updateEntity(1L, testCard)).thenReturn(testCard);
+        when(modelMapper.map(nullable(Card.class), eq(CardReadDto.class))).thenReturn(cardReadDto);
+
+        CardReadDto result = cardController.updateEntity(1L, cardUpdateDto);
+
+        assertEquals(cardReadDto, result);
+    }
+
+    @Test
+    void updateEntity_ShouldThrowException_WhenAdmin() {
+
+        UserReadDto adminUserDto = new UserReadDto();
+        adminUserDto.setId(2L);
+        cardUpdateDto.setUser(adminUserDto);
+
+        when(securityService.isAdmin(2L)).thenReturn(true);
+
+        assertThrows(IllegalStateException.class, () ->
+                cardController.updateEntity(1L, cardUpdateDto)
+        );
+    }
+
+
+    @Test
     void getAllEntities_ShouldSetUserIdInFilterDto_WhenUserRole() {
-        // Arrange
+
         long userId = 1L;
         when(securityService.hasRole("ROLE_USER")).thenReturn(true);
         when(securityService.getUserId()).thenReturn(userId);
